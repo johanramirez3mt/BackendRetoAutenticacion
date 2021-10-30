@@ -1,6 +1,8 @@
 package backendReto.web;
 
 
+import backendReto.Reports.CustomerAccountant;
+import backendReto.Reports.StatusReserve;
 import backendReto.model.Reservation;
 import backendReto.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +45,21 @@ public class ReservationController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public boolean deleteReservation(@PathVariable("id") int id) {
         return reservationService.eliminarReservation(id);
+    }
+
+    @GetMapping("/report-status")
+    public StatusReserve getReservas(){
+        return reservationService.getReporteStatusReservaciones();
+    }
+
+    @GetMapping("/report-dates/{dateOne}/{dateTwo}")
+    public List<Reservation> getReservasTiempo (@PathVariable("dateOne")String dateOne, @PathVariable("dateTwo")String dateTwo){
+        return reservationService.getReportesTiempoReservaciones(dateOne, dateTwo);
+    }
+
+    @GetMapping("/report-clients")
+    public List<CustomerAccountant> getClientes(){
+        return reservationService.servicioTopClientes();
+
     }
 }
